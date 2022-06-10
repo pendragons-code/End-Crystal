@@ -23,18 +23,18 @@ public class onPlayerDeath implements Listener {
                 createPlayerSection(pname);
             }
             data.set(playerDeaths(pname), getPlayerDeaths(pname) + 1);
-            List<String> newList = getPlayerMessages(pname);
-            if (getPlayerMessages(pname).size() >= config.getInt("messages.size")) {
+            List<String> newDeathList = getPlayerDeathMessages(pname);
+            if (getPlayerDeathMessages(pname).size() >= config.getInt("messages.size")) {
                 // message history too full
-                newList.remove(newList.size() - 1);
+                newDeathList.remove(newDeathList.size() - 1);
                 // remove oldest/last message
             }
-            newList.add(0, event.getDeathMessage());
+            newDeathList.add(0, event.getDeathMessage());
             // add message at the top of the list
-            data.set(playerMessages(pname), newList);
+            data.set(playerDeathMessages(pname), newDeathList);
 
 
-
+            // should use a method but mehhhhhh
             Player k = p.getKiller();
             String kname = k.getDisplayName();
 
@@ -42,6 +42,15 @@ public class onPlayerDeath implements Listener {
                 createPlayerSection(kname);
             }
             data.set(playerKills(kname), getPlayerKills(kname) + 1);
+            List<String> newKillList = getPlayerKillMessages(kname);
+            if (getPlayerKillMessages(kname).size() >= config.getInt("messages.size")) {
+                // message history too full
+                newKillList.remove(newKillList.size() - 1);
+                // remove oldest/last message
+            }
+            newKillList.add(0, event.getDeathMessage());
+            // add message at the top of the list
+            data.set(playerKillMessages(kname), newKillList);
         }
     }
 }

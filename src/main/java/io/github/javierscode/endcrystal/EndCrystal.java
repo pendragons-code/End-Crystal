@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import io.github.javierscode.endcrystal.Commands.endcrystal;
+import io.github.javierscode.endcrystal.Commands.stats;
 import io.github.javierscode.endcrystal.Listener.onPlayerDeath;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -19,7 +19,7 @@ public final class EndCrystal extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
-        getCommand("endcrystal").setExecutor(new endcrystal());
+        getCommand("stats").setExecutor(new stats());
         data = getConfig("data.yml");
         saveDefaultConfig();
         // save config.yml
@@ -65,20 +65,26 @@ public final class EndCrystal extends JavaPlugin {
     public static String playerDeaths(String name) {
         return name + ".deaths";
     }
-    public static String playerMessages(String name) {
-        return name + ".msgs";
+    public static String playerKillMessages(String name) {
+        return name + ".killmsgs";
+    }
+    public static String playerDeathMessages(String name) {
+        return name + ".deathmsgs";
     }
 
     public static int getPlayerKills(String name) {
-        return data.getInt(playerDeaths(name));
+        return data.getInt(playerKills(name));
     }
 
     public static int getPlayerDeaths(String name) {
         return data.getInt(playerDeaths(name));
     }
 
-    public static List<String> getPlayerMessages(String name) {
-        return data.getStringList(playerDeaths(name));
+    public static List<String> getPlayerKillMessages(String name) {
+        return data.getStringList(playerKillMessages(name));
     }
 
+    public static List<String> getPlayerDeathMessages(String name) {
+        return data.getStringList(playerDeathMessages(name));
+    }
 }
