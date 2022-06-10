@@ -1,0 +1,4 @@
+messages:
+  # Config related to death message history.
+  size: 5
+  # How many messages will it store before the oldest gets deleted.
