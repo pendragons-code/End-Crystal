@@ -7,7 +7,7 @@ description: PVP made easy
 commands:
   stats:
     description: Show your PVP stats!
-    usage: /stats (kills/deaths/recentdeaths/recentkills) "player name"
+    usage: /stats kills/deaths/recentdeaths/recentkills [player name]
   top:
     description: Shows the leaderboard of the server!
-    usage: /top (kills/deaths)
+    usage: /top kills/deaths (amount)

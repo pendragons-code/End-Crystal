@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import io.github.javierscode.endcrystal.Commands.stats;
+import io.github.javierscode.endcrystal.Commands.top;
 import io.github.javierscode.endcrystal.Listener.onPlayerDeath;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -22,6 +23,7 @@ public final class EndCrystal extends JavaPlugin {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
         Objects.requireNonNull(getCommand("stats")).setExecutor(new stats());
+        Objects.requireNonNull(getCommand("top")).setExecutor(new top());
 
         dataFile = getFile("data.yml");
         data = getConfig(dataFile);
@@ -56,6 +58,7 @@ public final class EndCrystal extends JavaPlugin {
         }
         return config;
     }
+
 
     public static void createPlayerSection(String playerName, FileConfiguration config, File configFile) {
         // create a section in data.yml for the player
