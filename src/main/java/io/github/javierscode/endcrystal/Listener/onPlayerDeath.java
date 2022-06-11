@@ -13,7 +13,7 @@ import static io.github.javierscode.endcrystal.EndCrystal.*;
 public class onPlayerDeath implements Listener {
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
+    public void OnPlayerDeath(PlayerDeathEvent event) {
         if (!Objects.isNull(event.getEntity().getKiller())) {
             Player p = event.getEntity();
             String pname = p.getDisplayName();
