@@ -23,43 +23,37 @@ public class onPlayerDeath implements Listener {
 
             if (!data.contains(pname)) {
                 // no section containing the players name (first time dying?)
-                createPlayerSection(pname);
+                createPlayerSection(pname, data, dataFile);
             }
             data.set(playerDeaths(pname), getPlayerDeaths(pname) + 1);
-            List<String> newDeathList = getPlayerDeathMessages(pname);
-            if (getPlayerDeathMessages(pname).size() >= config.getInt("messages.size")) {
-                // message history too full
-                newDeathList.remove(newDeathList.size() - 1);
-                // remove oldest/last message
-            }
-            newDeathList.add(0, event.getDeathMessage());
             // add message at the top of the list
-            data.set(playerDeathMessages(pname), newDeathList);
+            data.set(playerDeathMessages(pname), getUpdatedList(getPlayerDeathMessages(pname), event.getDeathMessage()));
 
 
-            // should use a method but mehhhhhh
             Player k = p.getKiller();
             String kname = k.getDisplayName();
 
             if (!data.contains(kname)) {
-                createPlayerSection(kname);
+                createPlayerSection(kname, data, dataFile);
             }
             data.set(playerKills(kname), getPlayerKills(kname) + 1);
-            List<String> newKillList = getPlayerKillMessages(kname);
-            if (getPlayerKillMessages(kname).size() >= config.getInt("messages.size")) {
-                // message history too full
-                newKillList.remove(newKillList.size() - 1);
-                // remove oldest/last message
-            }
-            newKillList.add(0, event.getDeathMessage());
-            // add message at the top of the list
-            data.set(playerKillMessages(kname), newKillList);
+            data.set(playerKillMessages(kname), getUpdatedList(getPlayerKillMessages(kname), event.getDeathMessage()));
 
             try {
-                data.save(new File("data.yml"));
+                data.save(dataFile);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public List<String> getUpdatedList(List<String> list, String msg) {
+        if (list.size() >= config.getInt("messages.size")) {
+            // message history too full
+            list.remove(list.size() - 1);
+            // remove oldest/last message
+        }
+        list.add(0, msg);
+        return list;
     }
 }

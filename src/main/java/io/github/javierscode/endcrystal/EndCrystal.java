@@ -15,15 +15,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class EndCrystal extends JavaPlugin {
 
     public static FileConfiguration data;
+    public static File dataFile;
     public static FileConfiguration config;
 
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
         Objects.requireNonNull(getCommand("stats")).setExecutor(new stats());
-        data = getConfig("data.yml");
+
+        dataFile = getFile("data.yml");
+        data = getConfig(dataFile);
+
         saveDefaultConfig();
-        // save config.yml
         config = getConfig();
     }
 
@@ -32,7 +35,7 @@ public final class EndCrystal extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    private FileConfiguration getConfig(String filename) {
+    private File getFile(String filename) {
         // get file, create a new one if it doesnt exist
         File file = new File(getDataFolder(), filename);
         if (!file.exists()) {
@@ -40,7 +43,10 @@ public final class EndCrystal extends JavaPlugin {
             file.getParentFile().mkdirs();
             saveResource(filename, true);
         }
+        return file;
+    }
 
+    private FileConfiguration getConfig(File file) {
         // load the file's config
         YamlConfiguration config = new YamlConfiguration();
         try {
@@ -51,12 +57,17 @@ public final class EndCrystal extends JavaPlugin {
         return config;
     }
 
-    public static void createPlayerSection(String playerName) {
+    public static void createPlayerSection(String playerName, FileConfiguration config, File configFile) {
         // create a section in data.yml for the player
-        data.createSection(playerName);
-        data.createSection(playerName + ".kills");
-        data.createSection(playerName + ".deaths");
-        data.createSection(playerName + ".msgs");
+        config.createSection(playerName);
+        config.createSection(playerName + ".kills");
+        config.createSection(playerName + ".deaths");
+        config.createSection(playerName + ".msgs");
+        try {
+            config.save(configFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // strings for data.yml
