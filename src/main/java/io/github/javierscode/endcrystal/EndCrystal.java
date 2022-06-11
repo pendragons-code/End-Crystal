@@ -3,6 +3,7 @@ package io.github.javierscode.endcrystal;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import io.github.javierscode.endcrystal.Commands.stats;
 import io.github.javierscode.endcrystal.Listener.onPlayerDeath;
@@ -19,7 +20,7 @@ public final class EndCrystal extends JavaPlugin {
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(new onPlayerDeath(), this);
-        getCommand("stats").setExecutor(new stats());
+        Objects.requireNonNull(getCommand("stats")).setExecutor(new stats());
         data = getConfig("data.yml");
         saveDefaultConfig();
         // save config.yml
