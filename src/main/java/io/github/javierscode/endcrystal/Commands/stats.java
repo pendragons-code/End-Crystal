@@ -11,7 +11,7 @@ import static io.github.javierscode.endcrystal.EndCrystal.*;
 public class stats implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length != 2) {
+        if (args.length != 1) {
             sender.sendMessage("You need to specify a section!");
             return false;
         }
@@ -28,12 +28,20 @@ public class stats implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Your total deaths are: " + ChatColor.BOLD + getPlayerDeaths(p.getDisplayName()));
                 return true;
             case "recentkills":
+                if (getPlayerKillMessages(p.getDisplayName()).size() <= 0) {
+                    p.sendMessage(ChatColor.RED + "You had no recent kills!");
+                    return true;
+                }
                 p.sendMessage(ChatColor.RED + "Your recent kill messages were:");
                 for (String s : getPlayerKillMessages(p.getDisplayName())) {
                     p.sendMessage(s);
                 }
                 return true;
             case "recentdeaths":
+                if (getPlayerDeathMessages(p.getDisplayName()).size() <= 0) {
+                    p.sendMessage(ChatColor.RED + "You had no recent kills!");
+                    return true;
+                }
                 p.sendMessage(ChatColor.RED + "Your recent death messages were:");
                 for (String s : getPlayerDeathMessages(p.getDisplayName())) {
                     p.sendMessage(s);

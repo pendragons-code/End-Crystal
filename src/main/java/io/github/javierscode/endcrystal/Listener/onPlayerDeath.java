@@ -1,10 +1,13 @@
 package io.github.javierscode.endcrystal.Listener;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,6 +54,12 @@ public class onPlayerDeath implements Listener {
             newKillList.add(0, event.getDeathMessage());
             // add message at the top of the list
             data.set(playerKillMessages(kname), newKillList);
+
+            try {
+                data.save(new File("data.yml"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
