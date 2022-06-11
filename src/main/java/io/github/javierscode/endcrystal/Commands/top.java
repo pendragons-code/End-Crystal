@@ -24,17 +24,26 @@ public class top implements CommandExecutor {
             return true;
         }
         Player p = (Player) sender;
-        int amount = config.getInt("top.default");
+        int amount;
+        int size = config.getKeys(false).size();
         if (args.length > 1) {
             // specified amount of players to show
             try {
-                amount = Integer.parseInt(args[1]);
+                int i = Integer.parseInt(args[1]);
+                if (i > size) {
+                    p.sendMessage(ChatColor.RED + "Theres not enough players tracked! Showing " + size + " players.");
+                    amount = size;
+                } else {
+                    amount = i;
+                }
             } catch (NumberFormatException e) {
                 p.sendMessage(ChatColor.RED + "Unable to read the amount of players to show. Using default numbers.");
+                amount = Math.min(size, config.getInt("top.default"));
+                // Math.min returns whichever int is smaller
             }
 
-        } else if (config.getKeys(false).size() < config.getInt("top.default")) {
-            amount = config.getKeys(false).size();
+        } else {
+            amount = Math.min(size, config.getInt("top.default"));
         }
         int i = 1;
         switch (args[0]) {
