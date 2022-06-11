@@ -7,8 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import static io.github.javierscode.endcrystal.EndCrystal.getPlayerDeaths;
-import static io.github.javierscode.endcrystal.EndCrystal.getPlayerKills;
+import java.util.*;
+
+import static io.github.javierscode.endcrystal.EndCrystal.data;
 
 public class top implements CommandExecutor {
     @Override
@@ -31,12 +32,23 @@ public class top implements CommandExecutor {
                 p.sendMessage(ChatColor.RED + "Unable to read the amount of players to show. Defaulting to 5.");
             }
         }
+        int i = 1;
         switch (args[0]) {
             case "kills":
                 p.sendMessage(ChatColor.YELLOW + "The top " + amount + " players in kills are: ");
+                HashMap<String, Integer> largestKills = findLargest(data, "kills", amount);
+                for (String s : largestKills.keySet()) {
+                    p.sendMessage(ChatColor.YELLOW + String.valueOf(i) + ": " + s + ", with " + ChatColor.BOLD + largestKills.get(s) + ChatColor.RESET + ChatColor.YELLOW + " deaths!");
+                    i++;
+                }
                 return true;
             case "deaths":
                 p.sendMessage(ChatColor.YELLOW + "The top " + amount + " players in deaths are: ");
+                HashMap<String, Integer> largestDeaths = findLargest(data, "deaths", amount);
+                for (String s : largestDeaths.keySet()) {
+                    p.sendMessage(ChatColor.YELLOW + String.valueOf(i) + ": " + s + ", with " + ChatColor.BOLD + largestDeaths.get(s) + ChatColor.RESET + ChatColor.YELLOW + " deaths!");
+                    i++;
+                }
                 return true;
             default:
                 sender.sendMessage("Unknown section specified!");
