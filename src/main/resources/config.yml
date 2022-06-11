@@ -2,3 +2,8 @@ messages:
   # Config related to death message history.
   size: 5
   # How many messages will it store before the oldest gets deleted.
+top:
+  # Config related to /top.
+  default: 5
+  # The default amount of players to show when doing /top.
+  # If data.yml's playerlist is smaller than this, the amount will default to the playerlist's size.
