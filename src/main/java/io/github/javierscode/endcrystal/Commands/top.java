@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import static io.github.javierscode.endcrystal.EndCrystal.getPlayerDeaths;
@@ -43,7 +44,25 @@ public class top implements CommandExecutor {
         }
 
     }
-    private void findLargest(String type) {
-
+    /**
+     * @param amount The amount of players to return.
+     * @param type The value needed to find. Should be kills/deaths
+     *
+     **/
+    private HashMap<String, Integer> findLargest(FileConfiguration config, String type, int amount) {
+        HashMap<Integer, String> playerValue = new HashMap<>();
+        for (String s : config.getKeys(false)) {
+            playerValue.put(config.getInt(s + "." + type), s);
+        }
+        Integer[] intarray = playerValue.keySet().toArray(new Integer[0]);
+        Arrays.sort(intarray);
+        // sorts from smallest to biggest
+        Collections.reverse(Arrays.asList(intarray));
+        // reverse from biggest to smallest
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        for (int i = 0; i < amount; i++) {
+            hashMap.put(playerValue.get(intarray[i]), intarray[i]);
+        }
+        return hashMap;
     }
-    }                                                                                              
+}
