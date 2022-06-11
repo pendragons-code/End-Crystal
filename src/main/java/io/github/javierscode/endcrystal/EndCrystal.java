@@ -62,7 +62,8 @@ public final class EndCrystal extends JavaPlugin {
         config.createSection(playerName);
         config.createSection(playerName + ".kills");
         config.createSection(playerName + ".deaths");
-        config.createSection(playerName + ".msgs");
+        config.createSection(playerName + ".killmsgs");
+        config.createSection(playerName + ".deathmsgs");
         try {
             config.save(configFile);
         } catch (IOException e) {
