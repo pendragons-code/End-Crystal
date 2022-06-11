@@ -1,6 +1,6 @@
-name: End Crystal
+name: EndCrystal
 version: '${project.version}'
-main: io.github.javiers-code.endcrystal.EndCrystal
+main: io.github.javierscode.endcrystal.EndCrystal
 api-version: 1.15
 authors: [ JaviersCode,DiffuseHyperion ]
 description: PVP made easy
