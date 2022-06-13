@@ -1,5 +1,5 @@
 # End-Crystal
-End Crystal is a plugin that tracks pvp stats in Minecraft
+End Crystal is a plugin that tracks pvp stats in Minecraft\
 Download the .jar file in the releases tab, then drag in the plugin folder for your server
 
   
